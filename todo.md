@@ -1,0 +1,3 @@
+- Remove unused code generated with the CLI (such as hello world endpoint)
+- Add refresh token
+- Fix vulnerabilities
