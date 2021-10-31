@@ -35,3 +35,6 @@ lerna-debug.log*
 !.vscode/extensions.json
 
 .env
+
+# type orm config for cli
+ormconfig.json

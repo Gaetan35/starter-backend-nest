@@ -11,14 +11,15 @@ export class AuthService {
   ) {}
 
   async login(email: string, password: string): Promise<TokenResponse> {
-    const user = await this.userService.getOne(email);
-    if (!user || user.passwordHash !== password) {
+    const user = await this.userService.getByEmail(email);
+    const isPasswordCorrect = await user.passwordHash.matches(password);
+    if (!user || !isPasswordCorrect) {
       throw new BadRequestException('Email or password incorrect');
     }
 
     const token = this.jwtService.sign({
       userId: user.id,
-      userRole: user.role,
+      userRole: 'user.role',
     });
     return { access_token: token };
   }

@@ -1,43 +1,31 @@
+import { UserRepository } from '@backend/database';
+import { HashedPassword, User, UserRole } from '@backend/domain';
 import { Injectable } from '@nestjs/common';
-
-export enum UserRole {
-  USER = 'user',
-  ADMIN = 'admin',
-}
-
-interface User {
-  id: string;
-  email: string;
-  passwordHash: string;
-  role: UserRole;
-}
+import { IdGeneratorService } from 'src/common/id-generator.service';
 
 @Injectable()
 export class UserService {
+  constructor(
+    private readonly userRepository: UserRepository,
+    private readonly idGeneratorService: IdGeneratorService,
+  ) {}
+
   async createOne(email: string, password: string): Promise<User> {
-    return {
-      id: 'id',
-      email: 'mail@mail.com',
-      passwordHash: 'password',
+    const user = await User.createUserWithPassword({
+      id: this.idGeneratorService.new(),
+      email,
+      name: email,
+      password: password,
       role: UserRole.USER,
-    };
+    });
+    return await this.userRepository.save_(user);
   }
 
   async getById(id: string): Promise<User> {
-    return {
-      id: 'id',
-      email: 'mail@mail.com',
-      passwordHash: 'password',
-      role: UserRole.USER,
-    };
+    return await this.userRepository.findById(id);
   }
 
-  async getOne(email: string): Promise<User | undefined> {
-    return {
-      id: 'id',
-      email: 'mail@mail.com',
-      passwordHash: 'password',
-      role: UserRole.USER,
-    };
+  async getByEmail(email: string): Promise<User | undefined> {
+    return await this.userRepository.findByEmail(email);
   }
 }

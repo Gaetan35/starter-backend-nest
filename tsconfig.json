@@ -16,6 +16,20 @@
     "noImplicitAny": false,
     "strictBindCallApply": false,
     "forceConsistentCasingInFileNames": false,
-    "noFallthroughCasesInSwitch": false
+    "noFallthroughCasesInSwitch": false,
+    "paths": {
+      "@backend/database": [
+        "libs/database/src"
+      ],
+      "@backend/database/*": [
+        "libs/database/src/*"
+      ],
+      "@backend/domain": [
+        "libs/domain/src"
+      ],
+      "@backend/domain/*": [
+        "libs/domain/src/*"
+      ],
+    }
   }
 }
